@@ -1,0 +1,14 @@
+.accordion {
+  border: 1px solid rgba(0,0,0,.225);
+}
+
+.tab {
+  background-color: #e6e6e6;
+  height: 30px;
+  cursor: pointer;
+}
+
+.collapse {
+  float: right;
+  margin-right: 10px;
+}
