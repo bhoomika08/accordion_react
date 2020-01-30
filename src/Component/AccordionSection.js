@@ -1,37 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './accordionSection.css';
 
-class AccordionSection extends Component {
-  static propTypes = {
-    children: PropTypes.instanceOf(Object).isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    label: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-  };
-
-  render() {
-    const {
-      props: { isOpen, title, label},
-    } = this;
-
-    return (
-      <div className='accordion'>
-        <div onClick={() => this.props.onClick(label)} className='tab'>
-          {title}
-          <div className='collapse'>
-            {!isOpen && <span>&#43;</span>}
-            {isOpen && <span>&#45;</span>}
-          </div>
+function AccordionSection(props) {
+  return (
+    <div className='accordion'>
+      <div onClick={() => props.onClick(props.label)} className='tab'>
+        {props.title}
+        <div className='collapse'>
+          {!props.isOpen && <span>&#43;</span>}
+          {props.isOpen && <span>&#45;</span>}
         </div>
-        {isOpen && (
-          <div className='section'>
-            {this.props.children}
-          </div>
-        )}
       </div>
-    );
-  }
+      {props.isOpen && (
+        <div className='section'>
+          {props.children}
+        </div>
+      )}
+    </div>
+  );
 }
+
+AccordionSection.propTypes = {
+  children: PropTypes.instanceOf(Object).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
 
 export default AccordionSection;

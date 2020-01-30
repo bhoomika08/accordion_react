@@ -1,59 +1,53 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import AccordionSection from './AccordionSection';
 import './accordion.css';
+import * as actionTypes from '../store/actions.js';
 
 class Accordion extends Component {
   static propTypes = {
     allowMultipleOpen: PropTypes.bool,
     children: PropTypes.instanceOf(Object).isRequired,
   };
-  constructor(props) {
-    super(props);
-    this.state = { 
-      openTabs: {}
-    };
-  }
 
-  onClick = label => {
-    const {
-      props: { allowMultipleOpen },
-      state: { openTabs },
-    } = this;
+  // onClick = label => {
+  //   const {
+  //     props: { allowMultipleOpen },
+  //     state: { openTabs },
+  //   } = this;
 
-    const isOpen = !!openTabs[label];
+  //   const isOpen = !!openTabs[label];
     
-    if (allowMultipleOpen) {
-      this.setState({
-        openTabs: {
-          ...openTabs,
-          [label]: !isOpen
-        }
-      });
-    } else {
-      this.setState({
-        openTabs: {
-          [label]: !isOpen
-        }
-      });
-    }
-  };
+  //   if (allowMultipleOpen) {
+  //     this.setState({
+  //       openTabs: {
+  //         ...openTabs,
+  //         [label]: !isOpen
+  //       }
+  //     });
+  //   } else {
+  //     this.setState({
+  //       openTabs: {
+  //         [label]: !isOpen
+  //       }
+  //     });
+  //   }
+  // };
 
   render() {
     const {
-      onClick,
       props: { children },
-      state: { openTabs },
     } = this;
 
     return (
       <div className='mainContainer'>
         {children.map((child,index) => (
           <AccordionSection key={index}
-            isOpen={!!openTabs[child.props.label]}
+            isOpen={!!this.props.openTabs[child.props.label]}
             label={child.props.label}
             title={child.props.title}
-            onClick={onClick}
+            onClick={() => this.props.toggleTab(child.props.label, this.props)}
           >
             {child.props.children}
           </AccordionSection>
@@ -63,4 +57,16 @@ class Accordion extends Component {
   }
 }
 
-export default Accordion;
+const mapStateToProps = (state) => {
+  return {
+    openTabs: state.openTabs,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleTab: (tabLabel, props) => dispatch({ type: actionTypes.TOGGLE, payload: {props: props, label: tabLabel }})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Accordion);
