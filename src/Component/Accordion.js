@@ -11,30 +11,6 @@ class Accordion extends Component {
     children: PropTypes.instanceOf(Object).isRequired,
   };
 
-  // onClick = label => {
-  //   const {
-  //     props: { allowMultipleOpen },
-  //     state: { openTabs },
-  //   } = this;
-
-  //   const isOpen = !!openTabs[label];
-    
-  //   if (allowMultipleOpen) {
-  //     this.setState({
-  //       openTabs: {
-  //         ...openTabs,
-  //         [label]: !isOpen
-  //       }
-  //     });
-  //   } else {
-  //     this.setState({
-  //       openTabs: {
-  //         [label]: !isOpen
-  //       }
-  //     });
-  //   }
-  // };
-
   render() {
     const {
       props: { children },
